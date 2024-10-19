@@ -2,11 +2,26 @@
   <div class="container">
     <h1>Form Pendaftaran Bantuan Sosial</h1>
     <form @submit.prevent="submitForm">
-      <input v-model="formData.nama" type="text" placeholder="Nama" required />
-      <input v-model="formData.nik" type="number" placeholder="NIK" required />
+      <input
+        v-model="formData.nama"
+        type="text"
+        id="nama"
+        placeholder="Nama"
+        required
+      />
+
+      <input
+        v-model="formData.nik"
+        type="number"
+        id="nik"
+        placeholder="NIK"
+        required
+      />
+
       <input
         v-model="formData.nomorKk"
         type="number"
+        id="nomorKk"
         placeholder="Nomor Kartu Keluarga"
         required
       />
@@ -37,17 +52,24 @@
       <input
         v-model="formData.umur"
         type="number"
+        id="umur"
         placeholder="Umur"
         required
       />
-      <select v-model="formData.jenisKelamin" required>
-        <option value="" disabled>Jenis Kelamin</option>
+
+      <label for="jenisKelamin">Jenis Kelamin:</label>
+      <select id="jenisKelamin" v-model="formData.jenisKelamin" required>
+        <option value="" disabled>Pilih Jenis Kelamin</option>
         <option value="Laki-laki">Laki-laki</option>
         <option value="Perempuan">Perempuan</option>
       </select>
 
       <label for="provinsi">Provinsi:</label>
-      <select @change="setProvinsi(provinsiList[$event.target.selectedIndex])">
+      <select
+        id="provinsi"
+        @change="setProvinsi(provinsiList[$event.target.selectedIndex])"
+      >
+        <option value="" disabled>Pilih Provinsi</option>
         <option
           v-for="provinsi in provinsiList"
           :key="provinsi.id"
@@ -58,7 +80,11 @@
       </select>
 
       <label for="kabKota">Kabupaten/Kota:</label>
-      <select @change="setKabKota(kabKotaList[$event.target.selectedIndex])">
+      <select
+        id="kabKota"
+        @change="setKabKota(kabKotaList[$event.target.selectedIndex])"
+      >
+        <option value="" disabled>Pilih Kabupaten/Kota</option>
         <option
           v-for="kabKota in kabKotaList"
           :key="kabKota.id"
@@ -70,8 +96,10 @@
 
       <label for="kecamatan">Kecamatan:</label>
       <select
+        id="kecamatan"
         @change="setKecamatan(kecamatanList[$event.target.selectedIndex])"
       >
+        <option value="" disabled>Pilih Kecamatan</option>
         <option
           v-for="kecamatan in kecamatanList"
           :key="kecamatan.id"
@@ -83,8 +111,10 @@
 
       <label for="kelurahan">Kelurahan/Desa:</label>
       <select
+        id="kelurahan"
         @change="setKelurahan(kelurahanList[$event.target.selectedIndex])"
       >
+        <option value="" disabled>Pilih Kelurahan</option>
         <option
           v-for="kelurahan in kelurahanList"
           :key="kelurahan.id"
@@ -97,26 +127,45 @@
       <input
         v-model="formData.alamat"
         type="text"
+        id="alamat"
         placeholder="Alamat"
         required
       />
-      <input v-model="formData.rt" type="text" placeholder="RT" required />
-      <input v-model="formData.rw" type="text" placeholder="RW" required />
+
       <input
-        v-model="formData.penghasilanSebelumPandemi"
-        type="number"
-        placeholder="Penghasilan Sebelum Pandemi"
+        v-model="formData.rt"
+        type="text"
+        id="rt"
+        placeholder="RT"
         required
       />
       <input
+        v-model="formData.rw"
+        type="text"
+        id="rw"
+        placeholder="RW"
+        required
+      />
+
+      <input
+        v-model="formData.penghasilanSebelumPandemi"
+        type="number"
+        id="penghasilanSebelumPandemi"
+        placeholder="Penghasilan Sebelum Pandemi"
+        required
+      />
+
+      <input
         v-model="formData.penghasilanSetelahPandemi"
         type="number"
+        id="penghasilanSetelahPandemi"
         placeholder="Penghasilan Setelah Pandemi"
         required
       />
 
-      <select v-model="formData.alasanBantuan" required>
-        <option value="" disabled>Alasan Membutuhkan Bantuan</option>
+      <label for="alasanBantuan">Alasan Membutuhkan Bantuan:</label>
+      <select id="alasanBantuan" v-model="formData.alasanBantuan" required>
+        <option value="" disabled>Pilih Alasan</option>
         <option value="Kehilangan pekerjaan">Kehilangan pekerjaan</option>
         <option value="Kepala keluarga">Kepala keluarga</option>
         <option value="Tergolong fakir/miskin">Tergolong fakir/miskin</option>
@@ -127,7 +176,7 @@
         <input type="checkbox" id="confirm" v-model="isConfirmed" required />
         <label for="confirm">
           Saya menyatakan bahwa data yang diisikan adalah benar dan siap
-          mempertanggungjawabkan apabila ditemukan ketidak sesuaian dalam data
+          mempertanggungjawabkan apabila ditemukan ketidaksesuaian dalam data
           tersebut.
         </label>
       </div>
