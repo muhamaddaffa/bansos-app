@@ -173,7 +173,7 @@ export default {
   },
   methods: {
     fetchProvinsi() {
-      fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json") // Change to HTTPS
+      fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json") // Use HTTPS
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -181,71 +181,97 @@ export default {
           return response.json();
         })
         .then((data) => {
-          this.provinsiList = data;
+          this.provinsiList = data; // Set the provinces list
         })
         .catch((error) => {
           console.error("Error fetching provinces:", error);
         });
     },
+
     fetchKabKota() {
-      const selectedProvinsi = this.formData.provinsi?.id;
-      if (selectedProvinsi) {
+      const selectedProvinsiId = this.formData.provinsi?.id; // Extract ID from selected province
+      if (selectedProvinsiId) {
         fetch(
-          `http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinsi}.json`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            this.kabKotaList = data;
+          `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinsiId}.json`
+        ) // Use HTTPS
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
           })
-          .catch((error) =>
-            console.error("Error fetching kabupaten/kota:", error)
-          );
-      }
-    },
-    fetchKecamatan() {
-      const selectedKabKota = this.formData.kabKota?.id;
-      if (selectedKabKota) {
-        fetch(
-          `http://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedKabKota}.json`
-        )
-          .then((response) => response.json())
           .then((data) => {
-            this.kecamatanList = data;
+            this.kabKotaList = data; // Set the kabupaten/kota list
           })
-          .catch((error) => console.error("Error fetching kecamatan:", error));
+          .catch((error) => {
+            console.error("Error fetching kabupaten/kota:", error);
+          });
       }
-    },
-    fetchKelurahan() {
-      const selectedKecamatan = this.formData.kecamatan?.id;
-      if (selectedKecamatan) {
-        fetch(
-          `http://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedKecamatan}.json`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            this.kelurahanList = data;
-          })
-          .catch((error) => console.error("Error fetching kelurahan:", error));
-      }
-    },
-    // Set selected provinsi
-    setProvinsi(selectedProvinsi) {
-      this.formData.provinsi = selectedProvinsi;
-      this.fetchKabKota();
-    },
-    // Set selected kabKota
-    setKabKota(selectedKabKota) {
-      this.formData.kabKota = selectedKabKota;
-      this.fetchKecamatan();
-    },
-    // Set selected kecamatan
-    setKecamatan(selectedKecamatan) {
-      this.formData.kecamatan = selectedKecamatan;
-      this.fetchKelurahan();
     },
 
+    fetchKecamatan() {
+      const selectedKabKotaId = this.formData.kabKota?.id; // Extract ID from selected kabupaten/kota
+      if (selectedKabKotaId) {
+        fetch(
+          `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedKabKotaId}.json`
+        ) // Use HTTPS
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            this.kecamatanList = data; // Set the kecamatan list
+          })
+          .catch((error) => {
+            console.error("Error fetching kecamatan:", error);
+          });
+      }
+    },
+
+    fetchKelurahan() {
+      const selectedKecamatanId = this.formData.kecamatan?.id; // Extract ID from selected kecamatan
+      if (selectedKecamatanId) {
+        fetch(
+          `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedKecamatanId}.json`
+        ) // Use HTTPS
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            this.kelurahanList = data; // Set the kelurahan list
+          })
+          .catch((error) => {
+            console.error("Error fetching kelurahan:", error);
+          });
+      }
+    },
+
+    // Set selected provinsi
+    setProvinsi(selectedProvinsi) {
+      this.formData.provinsi = selectedProvinsi; // Update the selected province
+      this.fetchKabKota(); // Fetch kabupaten/kota based on the selected province
+    },
+
+    // Set selected kabKota
+    setKabKota(selectedKabKota) {
+      this.formData.kabKota = selectedKabKota; // Update the selected kabupaten/kota
+      this.fetchKecamatan(); // Fetch kecamatan based on the selected kabupaten/kota
+    },
+
+    // Set selected kecamatan
+    setKecamatan(selectedKecamatan) {
+      this.formData.kecamatan = selectedKecamatan; // Update the selected kecamatan
+      this.fetchKelurahan(); // Fetch kelurahan based on the selected kecamatan
+    },
+
+    // Set selected kelurahan
     setKelurahan(selectedKelurahan) {
-      this.formData.kelurahan = selectedKelurahan;
+      this.formData.kelurahan = selectedKelurahan; // Update the selected kelurahan
     },
     handleFileUpload(type) {
       const fileInput = document.querySelector(`#${type}`);
