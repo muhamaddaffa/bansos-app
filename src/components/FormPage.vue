@@ -173,12 +173,19 @@ export default {
   },
   methods: {
     fetchProvinsi() {
-      fetch("http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
-        .then((response) => response.json())
+      fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json") // Change to HTTPS
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
         .then((data) => {
           this.provinsiList = data;
         })
-        .catch((error) => console.error("Error fetching provinces:", error));
+        .catch((error) => {
+          console.error("Error fetching provinces:", error);
+        });
     },
     fetchKabKota() {
       const selectedProvinsi = this.formData.provinsi?.id;
@@ -240,29 +247,19 @@ export default {
     setKelurahan(selectedKelurahan) {
       this.formData.kelurahan = selectedKelurahan;
     },
-    handleFileUpload(fileType) {
-      const fileInput = document.getElementById(fileType);
+    handleFileUpload(type) {
+      const fileInput = document.querySelector(`#${type}`);
       const file = fileInput.files[0];
 
       if (file) {
         const reader = new FileReader();
-
-        reader.onload = (event) => {
-          if (fileType === "fotoKtp") {
-            this.fotoKtpUrl = event.target.result; // Set the KTP preview URL
-          } else if (fileType === "fotoKk") {
-            this.fotoKkUrl = event.target.result; // Set the KK preview URL
+        reader.onload = (e) => {
+          if (type === "fotoKk") {
+            this.fotoKkUrl = e.target.result; // Set fotoKkUrl to the file's URL
           }
+          // Handle other file types...
         };
-
-        reader.readAsDataURL(file); // Read the file as a data URL
-      } else {
-        // Clear the preview if no file is selected
-        if (fileType === "fotoKtp") {
-          this.fotoKtpUrl = null;
-        } else if (fileType === "fotoKk") {
-          this.fotoKkUrl = null;
-        }
+        reader.readAsDataURL(file);
       }
     },
     submitForm() {
