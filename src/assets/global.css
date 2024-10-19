@@ -1,0 +1,68 @@
+/* Reset dasar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Styling body */
+body {
+  background-color: #eaeaea;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+input,
+select,
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+label {
+  font-size: 12px; /* Default font size for all labels */
+}
+/* Button styling */
+button {
+  background-color: #42b983;
+  color: #fff;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #369f71;
+}
+
+.confirmation-container {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.confirmation-container input[type="checkbox"] {
+  width: 20px; /* Size of the checkbox */
+  height: 20px; /* Size of the checkbox */
+  margin-right: 10px; /* Space between checkbox and label */
+}
+
+.confirmation-container label {
+  font-size: 12px; /* Font size */
+  line-height: 1.5; /* Line height for better readability */
+}
